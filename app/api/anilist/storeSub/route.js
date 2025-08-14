@@ -1,7 +1,3 @@
-import { NextResponse } from 'next/server'
-import { db } from '@lib/firebaseAdmin'
-import { decodeJwt } from 'jose'
-
 export async function POST(req) {
   try {
     // проверяем, что это runtime, а не build
@@ -10,7 +6,9 @@ export async function POST(req) {
       return NextResponse.json({ success: true })
     }
 
-    const { uid, token } = await req.json()
+    // получаем тело запроса безопасно
+    const body = await req.json().catch(() => ({}))
+    const { uid, token } = body
 
     if (!uid || !token) {
       return NextResponse.json({ error: 'Missing uid or token' }, { status: 400 })
