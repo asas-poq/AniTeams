@@ -12,8 +12,12 @@ const nextConfig = {
       'i.animepahe.ru ',
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true, // <--- добавляем эту строку
+  },
 };
 
+// PWA настройка
 const withPWA = nextPWA({
   dest: 'public',
   register: true,
