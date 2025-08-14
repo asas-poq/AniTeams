@@ -1,14 +1,27 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextPWA from 'next-pwa';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: [
+      'cdn.noitatnemucod.net',
+      'artworks.thetvdb.com',
+      's4.anilist.co',
+      'media.kitsu.app',
+      'i.animepahe.ru ',
+    ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // <--- добавляем эту строку
+  },
+};
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
+// PWA настройка
+const withPWA = nextPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
 });
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
-
-export default eslintConfig;
+export default withPWA(nextConfig);
